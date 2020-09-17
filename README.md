@@ -21,6 +21,8 @@ php artisan migrate
 
 通过下面的命令，创建一个菜单项，新建一个默认的`超级管理员`角色(administrator), 最后把所有的用户设置为`超级管理员`
 
+> `超级管理员`角色拥有所有路由和action的访问权限，并且所有的菜单对其可见。
+
 ```php
 php artisan admin:import rbac
 ```
@@ -29,7 +31,19 @@ php artisan admin:import rbac
 
 ## Usage
 
-> `超级管理员`角色拥有所有路由和action的访问权限，并且所有的菜单对其可见。
+首先需要在`config/admin.php`中的路由配置中添加rbac中间件开启, 在`route.middleware`中加入`'admin.rbac'`即可
+
+```php
+    'route' => [
+
+        'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin'),
+
+        'namespace' => 'App\\Admin\\Controllers',
+
+        'middleware' => ['web', 'admin', 'admin.rbac'],
+    ],
+
+```
 
 用户需先关联`角色`，然后给角色设置`可访问路由`、`可访问操作`以及`可见菜单`来实现给予角色访问控制。
 
