@@ -47,13 +47,13 @@ class RoleController extends AdminController
     {
         $form = new Form(new Role());
 
-        $form->text('name', trans('admin.name'));
+        $form->text('name', trans('admin.name'))->required();
 
         $form->text('slug', trans('admin.slug'))->with(function ($value, $field) {
             if ($value == 'administrator') {
                 $field->readonly();
             }
-        });
+        })->required();
 
         // In edit page
         $form->editing(function (Form $form) {
